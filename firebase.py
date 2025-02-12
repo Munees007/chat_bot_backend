@@ -1,8 +1,18 @@
 import firebase_admin
 from firebase_admin import credentials, db
+import os
+import json
+
+firebase_config_json = os.getenv("FIREBASE_CONFIG")
+
+if not firebase_config_json:
+    raise RuntimeError("Firebase configuration is missing!")
+
+# Parse the JSON string
+firebase_config = json.loads(firebase_config_json)
 
 # Initialize Firebase app with service account key
-cred = credentials.Certificate("chat_bot.json")  # Replace with your file path
+cred = credentials.Certificate(firebase_config)  # Replace with your file path
 firebase_admin.initialize_app(cred, {
     "databaseURL": "https://campus-connect-5ef22-default-rtdb.asia-southeast1.firebasedatabase.app/"  # Replace with your database URL
 })
