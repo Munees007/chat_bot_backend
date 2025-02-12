@@ -1,0 +1,6 @@
+pip install fastapi uvicorn nltk fuzzywuzzy
+    
+    fastapi → The main framework
+    uvicorn → Runs the FastAPI server
+    nltk → Helps process text (removing stop words, tokenization, etc.)
+    fuzzywuzzy → Matches user questions with stored questions
