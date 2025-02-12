@@ -63,7 +63,3 @@ def update_entry(entry_id: str, question: dict, answer: dict):
 def delete_entry(entry_id: str):
     return delete_chatbot_entry(entry_id)
 
-
-# Vercel requires a `handler` variable
-import mangum
-handler = mangum.Mangum(app)
