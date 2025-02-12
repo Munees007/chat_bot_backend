@@ -3,3 +3,6 @@ firebase-admin
 pydantic
 uvicorn
 mangum
+fuzzywuzzy
+python-Levenshtein
+requests
