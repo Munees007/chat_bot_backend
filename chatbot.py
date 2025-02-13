@@ -16,7 +16,8 @@ from firebase import fetch_chatbot_data
 #     return best_match, score, answer
 
 
-def get_best_match(user_input, lang="en", threshold=90):  # Increased threshold
+
+def get_best_match(user_input, lang="en", threshold=85):  # Lowered threshold
     chatbot_data = fetch_chatbot_data()
 
     if not isinstance(chatbot_data, list):
@@ -37,25 +38,20 @@ def get_best_match(user_input, lang="en", threshold=90):  # Increased threshold
         return None, 0, "Sorry, no questions are available in the database."
 
     # ✅ 2. Check for an exact match (ignoring case)
-    normalized_input = user_input.lower()
+    normalized_input = user_input.lower().strip()
     if normalized_input in question_list:
         matched_entry = question_list[normalized_input]
         answer = matched_entry["answer"].get(lang, "Sorry, I don't have an answer in this language.")
         print(f"✅ Exact match found: {normalized_input}")
         return normalized_input, 100, answer  # 100 because it's an exact match
 
-    # ✅ 3. Ignore very short user inputs (to prevent bad fuzzy matches)
-    if len(normalized_input.split()) <= 2:
-        print("⚠️ User input too short for fuzzy matching. Returning default response.")
-        return None, 0, "Sorry, I couldn't understand your question. Please try again."
-
-    # ✅ 4. Use fuzzy matching but switch to PartialRatio (better for small differences)
+    # ✅ 3. Use fuzzy matching, but now with `token_sort_ratio`
     print("🔎 No exact match found. Using fuzzy matching...")
-    best_match, score = process.extractOne(normalized_input, question_list.keys(), scorer=fuzz.partial_ratio)
+    best_match, score = process.extractOne(normalized_input, question_list.keys(), scorer=fuzz.token_sort_ratio)
 
     print(f"Best Match: {best_match}, Score: {score}")
 
-    # ✅ 5. Only return fuzzy match if it's above the new threshold
+    # ✅ 4. Only return fuzzy match if it's above the new threshold
     if score >= threshold:
         matched_entry = question_list[best_match]
         answer = matched_entry["answer"].get(lang, "Sorry, I don't have an answer in this language.")
