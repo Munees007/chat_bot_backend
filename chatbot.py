@@ -15,7 +15,8 @@ from firebase import fetch_chatbot_data
 
 #     return best_match, score, answer
 
-def get_best_match(user_input, lang="en", threshold=70):  # Increased threshold
+
+def get_best_match(user_input, lang="en", threshold=85):  # Adjusted threshold to 85%
     chatbot_data = fetch_chatbot_data()
 
     if not isinstance(chatbot_data, list):
@@ -31,8 +32,8 @@ def get_best_match(user_input, lang="en", threshold=70):  # Increased threshold
         print("No questions found in the selected language.")
         return None, 0, "Sorry, no matching questions found."
 
-    # Use token_sort_ratio to make matching stricter
-    best_match, score = process.extractOne(user_input, question_list.keys(), scorer=fuzz.token_sort_ratio)
+    # Use different fuzzy matching methods
+    best_match, score = process.extractOne(user_input, question_list.keys(), scorer=fuzz.WRatio)
 
     print(f"User Input: {user_input}")
     print(f"Best Match: {best_match}, Score: {score}")
