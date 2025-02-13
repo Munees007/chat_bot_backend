@@ -10,7 +10,7 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","https://anjac-chatbot.netlify.app/"],  # Allow all origins (Change this to specific frontend URL in production)
+    allow_origins=["*"],  # Allow all origins (Change this to specific frontend URL in production)
     allow_credentials=True,
     allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
     allow_headers=["*"],  # Allow all headers
