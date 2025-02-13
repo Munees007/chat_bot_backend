@@ -16,7 +16,7 @@ from firebase import fetch_chatbot_data
 #     return best_match, score, answer
 
 
-def get_best_match(user_input, lang="en", threshold=85):
+def get_best_match(user_input, lang="en", threshold=85):  # Adjusted threshold to 85%
     chatbot_data = fetch_chatbot_data()
 
     if not isinstance(chatbot_data, list):
@@ -25,21 +25,14 @@ def get_best_match(user_input, lang="en", threshold=85):
     question_list = {
         entry["questions"][lang]: entry
         for entry in chatbot_data
-        if lang in entry.get("questions", {})
+        if lang in entry.get("questions", {})  
     }
 
     if not question_list:
         print("No questions found in the selected language.")
         return None, 0, "Sorry, no matching questions found."
 
-    # **Check for an exact match first**
-    if user_input in question_list:
-        matched_entry = question_list[user_input]
-        answer = matched_entry["answer"].get(lang, "Sorry, I don't have an answer in this language.")
-        print(f"Exact Match Found: {user_input}")
-        return user_input, 100, answer  # Returning 100% match score for exact match
-
-    # **If no exact match, proceed with fuzzy matching**
+    # Use different fuzzy matching methods
     best_match, score = process.extractOne(user_input, question_list.keys(), scorer=fuzz.WRatio)
 
     print(f"User Input: {user_input}")
