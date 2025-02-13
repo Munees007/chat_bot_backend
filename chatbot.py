@@ -51,7 +51,7 @@ def get_best_match(user_input, lang="en", threshold=85):
     # ✅ 2. Improve fuzzy matching for short inputs
     input_words = normalized_input.split()
     if len(input_words) <= 2:  # If input is very short (like "college name")
-        threshold = 70  # Lower threshold for better matches
+        threshold = 50  # Lower threshold for better matches
 
     # ✅ 3. Use `token_set_ratio` for better matching
     print("🔎 No exact match found. Using fuzzy matching...")
