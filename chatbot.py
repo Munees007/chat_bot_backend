@@ -15,9 +15,6 @@ from firebase import fetch_chatbot_data
 
 #     return best_match, score, answer
 
-from fuzzywuzzy import process
-from firebase import fetch_chatbot_data
-
 def get_best_match(user_input, lang="en", threshold=50):
     chatbot_data = fetch_chatbot_data()
 
