@@ -17,9 +17,13 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+class SuggestionType(BaseModel):
+    hasValue: bool
+    reference: Dict[str, str]
 class QuestionData(BaseModel):
     questions: Dict[str, str]  # Languages as keys, question text as values
     answer: Dict[str, str]  # Languages as keys, answer text as values
+    suggestions: SuggestionType
 
 
 # API to receive JSON and store it in Firebase
