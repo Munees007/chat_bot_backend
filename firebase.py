@@ -3,7 +3,8 @@ from firebase_admin import credentials, db
 import os
 import json
 
-firebase_config_json = os.getenv("FIREBASE_CONFIG")
+firebase_config_json = os.getenv("FIREBASE_CONFIG");
+# firebase_config_json = open("chat_bot.json",mode="r",encoding="utf-8").read();
 
 if not firebase_config_json:
     raise RuntimeError("Firebase configuration is missing!")
@@ -46,7 +47,7 @@ def delete_chatbot_entry(entry_id):
 
 def add_questions_to_firebase(questions):
     chatbot_ref = db.reference("chatbot")
-    
+    print(questions);
     for question in questions:
         new_question_ref = chatbot_ref.push()  # Generate unique ID
         question_id = new_question_ref.key  # Get the generated key
@@ -57,3 +58,11 @@ def add_questions_to_firebase(questions):
         }
         
         new_question_ref.set(question_with_id)  # Store updated data
+
+            
+
+
+
+
+
+
