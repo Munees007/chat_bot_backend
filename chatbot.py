@@ -79,7 +79,10 @@ def get_best_match(user_input, lang="en", threshold=85):
     if not question_list:
         print("❌ No questions found in the database!")
         return None, 0, "Sorry, no questions are available in the database."
-
+    
+    # ✅ Initialize reference and hasValue
+    reference = {}
+    hasValue = False
     # ✅ Normalize input
     normalized_input = user_input.lower().strip()
 

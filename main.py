@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from typing import List,Dict
 from firebase import fetch_chatbot_data, add_chatbot_entry, update_chatbot_entry, delete_chatbot_entry,add_questions_to_firebase
 
+
 app = FastAPI()
 
 # Enable CORS
@@ -39,9 +40,9 @@ def read_root():
 @app.get("/chatbot")
 def chatbot_response(user_input: str, lang: str = "en"):
     print(f"Received user input: {user_input}")
-    best_question, confidence, answer = get_best_match(user_input, lang)
+    best_question, confidence, answer, reference,hasValue = get_best_match(user_input, lang)
     print(f"Best match: {best_question}, Confidence: {confidence}, Answer: {answer}")
-    return {"best_question": best_question, "confidence": confidence, "answer": answer}
+    return {"best_question": best_question, "confidence": confidence, "answer": answer, "reference": reference, "hasValue": hasValue}
 
 # Fetch all chatbot data
 @app.get("/chatbot/data")
@@ -62,4 +63,3 @@ def update_entry(entry_id: str, question: dict, answer: dict):
 @app.delete("/chatbot/delete/{entry_id}")
 def delete_entry(entry_id: str):
     return delete_chatbot_entry(entry_id)
-
