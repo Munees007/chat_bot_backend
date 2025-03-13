@@ -2,7 +2,7 @@ from fastapi import FastAPI,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from chatbot import get_best_match
 from pydantic import BaseModel
-from typing import List,Dict
+from typing import List,Dict,Optional
 from firebase import fetch_chatbot_data, add_chatbot_entry, update_chatbot_entry, delete_chatbot_entry,add_questions_to_firebase
 
 
@@ -19,7 +19,7 @@ app.add_middleware(
 
 class SuggestionType(BaseModel):
     hasValue: bool
-    reference: Dict[str, str]
+    reference: Optional[Dict[str, str]] = None
 class QuestionData(BaseModel):
     questions: Dict[str, str]  # Languages as keys, question text as values
     answer: Dict[str, str]  # Languages as keys, answer text as values
