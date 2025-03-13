@@ -93,7 +93,7 @@ def get_best_match(user_input, lang="en", threshold=85):
 
         hasValue = matched_entry["suggestions"].get("hasValue",False)
         reference = {}
-        if suggestions["hasValue"] == True:
+        if hasValue == True:
             reference = matched_entry["suggestions"].get("reference",{})
         if answer:
             return normalized_input, 100, answer, reference,hasValue
@@ -120,7 +120,7 @@ def get_best_match(user_input, lang="en", threshold=85):
 
         hasValue = matched_entry["suggestions"].get("hasValue",False)
         reference = {}
-        if suggestions["hasValue"] == True:
+        if hasValue == True:
             reference = matched_entry["suggestions"].get("reference",{})
             
         if answer:
