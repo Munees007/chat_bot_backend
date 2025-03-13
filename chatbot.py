@@ -90,10 +90,15 @@ def get_best_match(user_input, lang="en", threshold=85):
 
         # Retrieve the answer in the selected language
         answer = matched_entry["answer"].get(lang, None)
+
+        hasValue = matched_entry["suggestions"].get("hasValue",False)
+        reference = {}
+        if suggestions["hasValue"] == True:
+            reference = matched_entry["suggestions"]
         if answer:
-            return normalized_input, 100, answer
+            return normalized_input, 100, answer, reference,hasValue
         else:
-            return normalized_input, 100, random.choice(SORRY_MESSAGES.get(lang, SORRY_MESSAGES["en"]))
+            return normalized_input, 100, random.choice(SORRY_MESSAGES.get(lang, SORRY_MESSAGES["en"])), reference,hasValue
 
     # ✅ 2. Improve fuzzy matching for short inputs
     input_words = normalized_input.split()
@@ -112,11 +117,19 @@ def get_best_match(user_input, lang="en", threshold=85):
 
         # Retrieve the answer in the selected language
         answer = matched_entry["answer"].get(lang, None)
+
+        answer = matched_entry["answer"].get(lang, None)
+
+        hasValue = matched_entry["suggestions"].get("hasValue",False)
+        reference = {}
+        if suggestions["hasValue"] == True:
+            reference = matched_entry["suggestions"]
+            
         if answer:
-            return best_match, score, answer
+            return best_match, score, answer , reference,hasValue
         else:
-            return best_match, score, random.choice(SORRY_MESSAGES.get(lang, SORRY_MESSAGES["en"]))
+            return best_match, score, random.choice(SORRY_MESSAGES.get(lang, SORRY_MESSAGES["en"])), reference,hasValue
     
     else:
         print("❌ Score below threshold. Returning default response.")
-        return None, 0, random.choice(SORRY_MESSAGES.get(lang, SORRY_MESSAGES["en"]))
+        return None, 0, random.choice(SORRY_MESSAGES.get(lang, SORRY_MESSAGES["en"])), reference,hasValue
